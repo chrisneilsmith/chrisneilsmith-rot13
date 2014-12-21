@@ -1,0 +1,5 @@
+This is a project for the Udacity CS 253 course.
+
+It should function as a simple cipher that will rotate letters 13 places.
+
+It is a web app created through Google App Engine.
