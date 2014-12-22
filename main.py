@@ -29,7 +29,7 @@ form = """
 		<p>Give it a try. Enter some text and then hit submit.</p>
 
 		<form method='post'>
-			<textarea name="user_input" style="height: 100px; width: 400px;">%(user_input)s</textarea>
+			<textarea name="text" style="height: 100px; width: 400px;">%(text)s</textarea>
 			<br>
 			<br>
 			<input type='submit'>
@@ -61,16 +61,16 @@ def rot13(s):
     return output
 
 class MainHandler(webapp2.RequestHandler):
-    def write_form(self, user_input=""):
-        self.response.out.write(form % {"user_input": user_input})
+    def write_form(self, text=""):
+        self.response.out.write(form % {"text": text})
 
     def get(self):
     	#self.response.write('Soon to be a Rot 13 cipher here!')
         self.write_form()
 
     def post(self):
-	    user_input = self.request.get("user_input")
-	    self.write_form(escape_html(rot13(user_input)))
+	    text = self.request.get("text")
+	    self.write_form(escape_html(rot13(text)))
 
 	
 
