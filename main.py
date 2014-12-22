@@ -25,8 +25,7 @@ form = """
 	<body>
 		<h1>Enter some text to Rot13:</h1>
 		<form method='post'>
-			<input type='textarea' style="height: 100; width: 400">
-			</input>
+			<input type="textarea" name="user_input" style="height: 100; width: 400">%(user_input)s</input>
 			<br>
 			<br>
 			<input type='submit'>
@@ -42,12 +41,18 @@ def rot13(s):
 	return
 
 class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Soon to be a Rot 13 cipher here!')
-        self.response.write(form)
+    def write_form(self, user_input=""):
+        self.response.out.write(form % {"user_input": user_input})
 
-    #def post(self):
-    	
+    def get(self):
+    	#self.response.write('Soon to be a Rot 13 cipher here!')
+        self.write_form()
+
+    def post(self):
+	    user_input = self.request.get("user_input")
+	    self.write_form(user_input)
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
