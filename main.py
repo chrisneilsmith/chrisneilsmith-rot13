@@ -25,7 +25,7 @@ form = """
 	<body>
 		<h1>Enter some text to Rot13:</h1>
 		<form method='post'>
-			<input type="textarea" name="user_input" style="height: 100; width: 400">%(user_input)s</input>
+			<textarea name="user_input" style="height: 100px; width: 400px;">%(user_input)s</textarea>
 			<br>
 			<br>
 			<input type='submit'>
@@ -50,7 +50,7 @@ class MainHandler(webapp2.RequestHandler):
 
     def post(self):
 	    user_input = self.request.get("user_input")
-	    self.write_form(user_input)
+	    self.write_form(escape_html(user_input))
 
 
 
