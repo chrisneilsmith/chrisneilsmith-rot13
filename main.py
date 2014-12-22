@@ -23,7 +23,11 @@ form = """
 		<title>Chris Smith's Rot 13 Cipher for Udacity CS 253</title>
 	</head>
 	<body>
-		<h1>Enter some text to Rot13:</h1>
+		<h1>Welcome to Chris Smith's Rot13 Web App</h1>
+
+		<p>When you hit submit, this web app will rotate each letter 13 places, but leave all other characters and spacing in tact.</p>
+		<p>Give it a try. Enter some text and then hit submit.</p>
+
 		<form method='post'>
 			<textarea name="user_input" style="height: 100px; width: 400px;">%(user_input)s</textarea>
 			<br>
@@ -35,10 +39,26 @@ form = """
 """
 
 def escape_html(s):
-	return cgi.escape(s, quote=True)
+		return cgi.escape(s, quote=True)
 
 def rot13(s):
-	return
+    output = ""
+    lowercase = "abcdefghijklmnopqrstuvwxyz"
+    uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    for letter in s:
+        if letter in lowercase and letter <= "m":
+            output += chr(ord(letter) + 13)
+        elif letter in lowercase and letter > "m":
+            output += chr(ord(letter) - 13)
+        elif letter in uppercase and letter <= "M":
+            output += chr(ord(letter) + 13)
+        elif letter in uppercase and letter > "M":
+            output += chr(ord(letter) - 13)
+        else:
+            output += letter
+
+    return output
 
 class MainHandler(webapp2.RequestHandler):
     def write_form(self, user_input=""):
@@ -50,9 +70,9 @@ class MainHandler(webapp2.RequestHandler):
 
     def post(self):
 	    user_input = self.request.get("user_input")
-	    self.write_form(escape_html(user_input))
+	    self.write_form(escape_html(rot13(user_input)))
 
-
+	
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
